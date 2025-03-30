@@ -16,6 +16,15 @@ void SortDocuments(vector<Student>& matched_documents) {
         });
 }
 
+bool isValidName(const string& name) {
+    for (char c : name) {
+        if (!isalpha(c)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 int main() {
 
     setlocale(LC_ALL, "Russian");
@@ -34,11 +43,21 @@ int main() {
 
         if (name == "0") break;
 
+        if (!isValidName(name)) {
+            cout << "\nИмя должно состоять только из букв.\n\n";
+            continue;
+        }
+
         cout << "Оценка: ";
         cin >> grade;
 
-        students.push_back({ name, grade });
+        if (grade < 0 || grade > 100) {
+            cout << "\nКоличество баллов не может нарушать диапазон от 0 до 100.\n\n";
 
+            cout << "Оценка: ";
+            cin >> grade;
+            students.push_back({ name, grade });
+        }
     }
 
     SortDocuments(students);
